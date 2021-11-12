@@ -9,14 +9,14 @@ spec:
     - host: todo.com
       http:
         paths:
-          - path: /?(.*)
+          - path: /(.*)
             pathType: Prefix
             backend:
               service:
                 name: todo-ui-service
                 port:
                   number: 3001
-          - path: /api/?(.*)
+          - path: /api/(.*)
             pathType: Prefix
             backend:
               service:
