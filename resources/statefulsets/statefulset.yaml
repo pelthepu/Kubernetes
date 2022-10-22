@@ -16,37 +16,20 @@ spec:
       containers:
         - name: mongo
           image: mongo:4.0.8
+          args: ["--dbpath", "/data/db"]
           env:
             - name: MONGO_INITDB_ROOT_USERNAME
-              valueFrom:
-                configMapKeyRef:
-                  name: mongodb-config
-                  key: username
-                  optional: false
+              value: "admin"
             - name: MONGO_INITDB_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mongodb-secret
-                  key: password
-                  optional: false
+              value: "password"
           command:
             - mongod
             - "--bind_ip_all"
-            - "--config"
-            - "/etc/mongodb-config/mongodb.conf"
+            - "--replSet"
+            - rs0
           volumeMounts:
             - name: mongo-volume
               mountPath: /data/db
-            - name: mongodb-config
-              mountPath: /etc/mongodb-config
-              readOnly: false
-      volumes:
-        - name: mongodb-config
-          configMap:
-            name: mongodb-config
-            items:
-            - key: "mongodb.conf"
-              path: "mongodb.conf"
   volumeClaimTemplates:
     - metadata:
         name: mongo-volume
