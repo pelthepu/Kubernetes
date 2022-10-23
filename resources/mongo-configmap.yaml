@@ -1,12 +1,12 @@
-kind: ConfigMap
-metadata:
-  name: mongodb-config
 apiVersion: v1
-immutable: true
+kind: ConfigMap
+metadata: 
+  name: mongodb-config
+immutable: false
 data:
-  username: "admin2"
+  username: admin1
   mongodb.conf: |
     storage:
-      dbPath: /data/configdb
+      dbPath: /data/db
     replication:
         replSetName: "rs0"
