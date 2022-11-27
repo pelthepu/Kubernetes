@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: resource-quota
+spec:
+  hard:
+    requests.cpu: 400m
+    requests.memory: 200Mi
+    limits.cpu: 2000m
+    limits.memory: 8Gi
+    pods: "10"
+    replicationcontrollers: "5"
+    secrets: "10"
+    configmaps: "10"
+    persistentvolumeclaims: "4"
+    services: "5"
+    services.loadbalancers: "1"
+    services.nodeports: "2"
+    # Only two PVCs can claim storage with the ssd StorageClass.
+    ssd.storageclass.storage.k8s.io/persistentvolumeclaims: "2"
