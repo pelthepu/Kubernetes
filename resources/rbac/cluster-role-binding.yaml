@@ -1,0 +1,16 @@
+apiVersion: rbac.authorization.k8s.io/v1
+# This cluster role binding allows anyone in the "dev" group to read secrets in any namespace.
+kind: ClusterRoleBinding
+metadata:
+  name: pod-reader-global
+subjects:
+- kind: User
+  name: pavan # "name" is case sensitive
+  apiGroup: rbac.authorization.k8s.io
+- kind: Group
+  name: dev # "name" is case sensitive
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
