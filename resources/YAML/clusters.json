@@ -1,0 +1,60 @@
+[
+  {
+    "name": "local-cluster",
+    "isActive": true,
+    "createdAt": "2021-09-25T21:11:15.000Z",
+    "version": "1.22.1",
+    "access": {
+      "ip": "192.168.58.2",
+      "port": 8443
+    },
+    "nodes": [
+      {
+        "name": "local-vluster-01",
+        "type": "master",
+        "tags": [
+          "local",
+          "master"
+        ]
+      },
+      {
+        "name": "local-cluster-02",
+        "type": "worker",
+        "tags": [
+          "local",
+          "worker"
+        ]
+      }
+    ],
+    "description": "This is the local cluser created on minikube. And the driver I uswed is Docker!\n",
+    "longDescription": "This is the local cluser created on minikube.\nAnd the driver I uswed is Docker!\n"
+  },
+  {
+    "name": "dev-cluster",
+    "isActive": true,
+    "createdAt": "2021-09-24T21:11:15.000Z",
+    "version": "1.22.1",
+    "access": {
+      "ip": "192.168.58.3",
+      "port": 8443
+    },
+    "nodes": [
+      {
+        "name": "dev-vluster-01",
+        "type": "master",
+        "tags": [
+          "dev",
+          "master"
+        ]
+      },
+      {
+        "name": "dev-cluster-02",
+        "type": "worker",
+        "tags": [
+          "dev",
+          "worker"
+        ]
+      }
+    ]
+  }
+]
