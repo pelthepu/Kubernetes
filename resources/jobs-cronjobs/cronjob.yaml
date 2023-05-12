@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: mongodb-backup-cronjob
+spec:
+  schedule: "* * * * *"
+  concurrencyPolicy: Allow
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 60 # delete job after 60 seconds
+      template:
+        spec:
+          containers:
+            - name: mongodb
+              image: mongo
+              command: ["/bin/sh", "-c"]
+              args:
+                [
+                  'mongodump --uri "mongodb://test1:${MONGO_PASSWORD}@mongo-0.mongo.default.svc.cluster.local:27017,mongo-1.mongo.default.svc.cluster.local:27017,mongo-2.mongo.default.svc.cluster.local:27017/?replicaSet=rs0&readPreference=secondaryPreferred&authSource=admin&ssl=false" -o /usr/share/mongodump/$(date +"%d%m%Y-%H%M%S")',
+                ]
+              volumeMounts:
+                - mountPath: "/usr/share/mongodump/"
+                  name: mongodump
+              env:
+                - name: MONGO_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: password
+                      name: mongodb-secret
+          volumes:
+            - name: mongodump
+              persistentVolumeClaim:
+                claimName: mongodump
+          restartPolicy: Never
